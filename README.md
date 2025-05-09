@@ -59,64 +59,6 @@ This is a Spring Boot project that processes order data provided in JSON format.
 - The frontend contains a simple form to accept JSON input, which is sent to the backend for processing.
 - After processing, the results are dynamically displayed on the page using JavaScript.
 
-## JSON Format Example
-
-```json
-[
-    {
-        "orderId": "1001",
-        "customer": "Alice",
-        "items": [
-            {"product": "Widget", "quantity": 2, "price": 10.0},
-            {"product": "Gadget", "quantity": 1, "price": 15.0}
-        ],
-        "status": "shipped"
-    },
-    {
-        "orderId": "1002",
-        "customer": "Bob",
-        "items": [
-            {"product": "Widget", "quantity": 1, "price": 10.0}
-        ],
-        "status": "pending"
-    }
-]
-```
-
-## Sample Response
-
-```json
-{
-  "orders": [
-    {
-      "itemCount": 3,
-      "totalCost": 35,
-      "orderId": "1001",
-      "customer": "Alice",
-      "items": [
-        {"product": "Widget", "quantity": 2, "price": 10.0},
-        {"product": "Gadget", "quantity": 1, "price": 15.0}
-      ],
-      "status": "shipped"
-    },
-    {
-      "itemCount": 1,
-      "totalCost": 10,
-      "orderId": "1002",
-      "customer": "Bob",
-      "items": [
-        {"product": "Widget", "quantity": 1, "price": 10.0}
-      ],
-      "status": "pending"
-    }
-  ],
-  "summary": {
-    "totalShippedOrders": 1,
-    "totalRevenue": 35
-  }
-}
-```
-
 ## Endpoints
 
 ### POST `/api/orders/process`
@@ -127,15 +69,23 @@ This is a Spring Boot project that processes order data provided in JSON format.
 
 ```json
 [
-    {
-        "orderId": "1001",
-        "customer": "Alice",
-        "items": [
-            {"product": "Widget", "quantity": 2, "price": 10.0},
-            {"product": "Gadget", "quantity": 1, "price": 15.0}
-        ],
-        "status": "shipped"
-    }
+   {
+      "orderId": "1001",
+      "customer": "Alice",
+      "items": [
+         {"product": "Widget", "quantity": 2, "price": 10.0},
+         {"product": "Gadget", "quantity": 1, "price": 15.0}
+      ],
+      "status": "shipped"
+   },
+   {
+      "orderId": "1002",
+      "customer": "Bob",
+      "items": [
+         {"product": "Widget", "quantity": 1, "price": 10.0}
+      ],
+      "status": "pending"
+   }
 ]
 ```
 
@@ -143,23 +93,33 @@ This is a Spring Boot project that processes order data provided in JSON format.
 
 ```json
 {
-  "orders": [
-    {
-      "itemCount": 3,
-      "totalCost": 35,
-      "orderId": "1001",
-      "customer": "Alice",
-      "items": [
-        {"product": "Widget", "quantity": 2, "price": 10.0},
-        {"product": "Gadget", "quantity": 1, "price": 15.0}
-      ],
-      "status": "shipped"
-    }
-  ],
-  "summary": {
-    "totalShippedOrders": 1,
-    "totalRevenue": 35
-  }
+   "orders": [
+      {
+         "itemCount": 3,
+         "totalCost": 35,
+         "orderId": "1001",
+         "customer": "Alice",
+         "items": [
+            {"product": "Widget", "quantity": 2, "price": 10.0},
+            {"product": "Gadget", "quantity": 1, "price": 15.0}
+         ],
+         "status": "shipped"
+      },
+      {
+         "itemCount": 1,
+         "totalCost": 10,
+         "orderId": "1002",
+         "customer": "Bob",
+         "items": [
+            {"product": "Widget", "quantity": 1, "price": 10.0}
+         ],
+         "status": "pending"
+      }
+   ],
+   "summary": {
+      "totalShippedOrders": 1,
+      "totalRevenue": 35
+   }
 }
 ```
 
