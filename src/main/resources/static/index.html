@@ -1,57 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Order Processor</title>
     <style>
+        * {
+          box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #f0f2f5;
+          color: #333;
+          margin: 0;
+          padding: 20px;
         }
+
+        h1, h2, h4 {
+          color: #b25e7e;
+        }
+
+        form {
+          background: #fff;
+          padding: 20px;
+          border-radius: 12px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+          margin-bottom: 30px;
+        }
+
         textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            height: 150px;
+          width: 100%;
+          padding: 12px;
+          font-size: 14px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          resize: vertical;
+          height: 160px;
+          margin-bottom: 15px;
         }
+
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
+          padding: 12px 25px;
+          font-size: 15px;
+          background-color: #4caf50;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
         }
+
         button:hover {
-            background-color: #45a049;
+          background-color: #388e3c;
         }
-        .order-container {
-            margin-top: 20px;
+
+        .order-container, .order-summary {
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 12px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+          margin-bottom: 30px;
         }
+
         .order {
-            border: 1px solid #ddd;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+          border: 1px solid #e1e4e8;
+          margin-bottom: 15px;
+          padding: 15px;
+          border-radius: 8px;
+          background-color: #fafafa;
         }
+
         .order-header {
-            font-size: 18px;
-            font-weight: bold;
+          font-size: 17px;
+          font-weight: 600;
+          margin-bottom: 8px;
+          color: #2c3e50;
         }
-        .order-details {
-            margin-top: 10px;
+
+        .order-details ul {
+          padding-left: 20px;
         }
-        .order-summary {
-            margin-top: 30px;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #e0f7fa;
+
+        .order-details li {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: 600px) {
+          textarea {
+            height: 120px;
+          }
+
+          button {
+            width: 100%;
+          }
         }
     </style>
 </head>
@@ -59,97 +101,97 @@
 <h1>Order Processor</h1>
 <p>Paste your JSON data below and click "Process Orders" to see the results:</p>
 
-<!-- Form for input -->
 <form id="upload-form">
-        <textarea id="json-input">[
-            {
-                "orderId": "1001",
-                "customer": "Alice",
-                "items": [
-                    {"product": "Widget", "quantity": 2, "price": 10.0},
-                    {"product": "Gadget", "quantity": 1, "price": 15.0}
-                ],
-                "status": "shipped"
-            },
-            {
-                "orderId": "1002",
-                "customer": "Bob",
-                "items": [
-                    {"product": "Widget", "quantity": 1, "price": 10.0}
-                ],
-                "status": "pending"
-            }
-        ]</textarea><br/>
+    <textarea id="json-input">[
+  {
+    "orderId": "1001",
+    "customer": "Alice",
+    "items": [
+      {"product": "Widget", "quantity": 2, "price": 10.0},
+      {"product": "Gadget", "quantity": 1, "price": 15.0}
+    ],
+    "status": "shipped"
+  },
+  {
+    "orderId": "1002",
+    "customer": "Bob",
+    "items": [
+      {"product": "Widget", "quantity": 1, "price": 10.0}
+    ],
+    "status": "pending"
+  }
+]</textarea>
     <button type="submit">Process Orders</button>
 </form>
 
-<!-- Area to display processed orders -->
 <h2>Processed Orders</h2>
 <div id="orders-container" class="order-container"></div>
 
-<!-- Area to display summary -->
 <h2>Summary</h2>
 <div id="summary-container" class="order-summary"></div>
 
 <script>
     document.getElementById('upload-form').onsubmit = async function(e) {
-        e.preventDefault(); // Prevent form submission
+      e.preventDefault();
 
-        const input = document.getElementById('json-input').value; // Get JSON from the textarea
+      const input = document.getElementById('json-input').value;
+      try {
         const res = await fetch('/api/orders/process', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: input
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: input
         });
 
         if (res.ok) {
-            const data = await res.json();
-            displayOrders(data.orders);
-            displaySummary(data.summary);
+          const data = await res.json();
+          displayOrders(data.orders);
+          displaySummary(data.summary);
         } else {
-            document.getElementById('orders-container').innerHTML = '<p>Error processing the orders!</p>';
+          document.getElementById('orders-container').innerHTML = '<p style="color:red;">Error processing the orders!</p>';
         }
-    }
+      } catch (err) {
+        document.getElementById('orders-container').innerHTML = '<p style="color:red;">Request failed. Check backend status.</p>';
+      }
+    };
 
-    // Displaying the list of orders
     function displayOrders(orders) {
-        const container = document.getElementById('orders-container');
-        container.innerHTML = ''; // Clear any existing content
+      const container = document.getElementById('orders-container');
+      container.innerHTML = '';
 
-        orders.forEach(order => {
-            const orderDiv = document.createElement('div');
-            orderDiv.classList.add('order');
+      orders.forEach(order => {
+        const orderDiv = document.createElement('div');
+        orderDiv.classList.add('order');
 
-            const header = document.createElement('div');
-            header.classList.add('order-header');
-            header.innerHTML = `Order #${order.orderId} - ${order.customer} (${order.status})`;
+        const header = document.createElement('div');
+        header.classList.add('order-header');
+        header.textContent = `Order #${order.orderId} - ${order.customer} (${order.status})`;
 
-            const details = document.createElement('div');
-            details.classList.add('order-details');
-            details.innerHTML = `
-                <p><strong>Item Count:</strong> ${order.itemCount}</p>
-                <p><strong>Total Cost:</strong> $${order.totalCost}</p>
-                <h4>Items:</h4>
-                <ul>
-                    ${order.items.map(item => `<li>${item.quantity} x ${item.product} ($${item.price} each)</li>`).join('')}
-                </ul>
-            `;
+        const details = document.createElement('div');
+        details.classList.add('order-details');
+        details.innerHTML = `
+          <p><strong>Item Count:</strong> ${order.itemCount}</p>
+          <p><strong>Total Cost:</strong> $${order.totalCost}</p>
+          <h4>Items:</h4>
+          <ul>
+            ${order.items.map(item =>
+              `<li>${item.quantity} x ${item.product} ($${item.price} each)</li>`
+            ).join('')}
+          </ul>
+        `;
 
-            orderDiv.appendChild(header);
-            orderDiv.appendChild(details);
-            container.appendChild(orderDiv);
-        });
+        orderDiv.appendChild(header);
+        orderDiv.appendChild(details);
+        container.appendChild(orderDiv);
+      });
     }
 
-    // Displaying the summary
     function displaySummary(summary) {
-        const container = document.getElementById('summary-container');
-        container.innerHTML = `
-            <p><strong>Total Shipped Orders:</strong> ${summary.totalShippedOrders}</p>
-            <p><strong>Total Revenue from Shipped Orders:</strong> $${summary.totalRevenue}</p>
-        `;
+      const container = document.getElementById('summary-container');
+      container.innerHTML = `
+        <p><strong>Total Shipped Orders:</strong> ${summary.totalShippedOrders}</p>
+        <p><strong>Total Revenue from Shipped Orders:</strong> $${summary.totalRevenue}</p>
+      `;
     }
 </script>
-
 </body>
 </html>
