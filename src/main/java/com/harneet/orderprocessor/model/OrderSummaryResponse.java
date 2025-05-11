@@ -1,4 +1,4 @@
-package com.pandell.orderprocessor.model;
+package com.harneet.orderprocessor.model;
 
 public class OrderSummaryResponse {
     private long totalShippedOrders;

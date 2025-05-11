@@ -1,6 +1,6 @@
-package com.pandell.orderprocessor.service;
+package com.harneet.orderprocessor.service;
 
-import com.pandell.orderprocessor.model.*;
+import com.harneet.orderprocessor.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

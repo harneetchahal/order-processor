@@ -1,4 +1,4 @@
-package com.pandell.orderprocessor.model;
+package com.harneet.orderprocessor.model;
 
 import java.util.List;
 

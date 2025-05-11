@@ -1,8 +1,8 @@
-package com.pandell.orderprocessor.controller;
+package com.harneet.orderprocessor.controller;
 
-import com.pandell.orderprocessor.model.CombinedOrderResponse;
-import com.pandell.orderprocessor.model.Order;
-import com.pandell.orderprocessor.service.OrderService;
+import com.harneet.orderprocessor.model.CombinedOrderResponse;
+import com.harneet.orderprocessor.model.Order;
+import com.harneet.orderprocessor.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

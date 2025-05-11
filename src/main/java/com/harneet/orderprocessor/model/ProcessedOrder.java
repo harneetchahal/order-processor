@@ -1,4 +1,4 @@
-package com.pandell.orderprocessor.model;
+package com.harneet.orderprocessor.model;
 
 public class ProcessedOrder extends Order {
     private int itemCount;
