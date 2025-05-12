@@ -1,6 +1,7 @@
 package com.harneet.orderprocessor.service;
 
 import com.harneet.orderprocessor.model.*;
+import com.harneet.orderprocessor.constants.OrderConstants;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,11 +10,8 @@ import java.util.List;
 @Service
 public class OrderService {
 
-    private final List<ProcessedOrder> processedOrders = new ArrayList<>();
-
     public CombinedOrderResponse processOrdersAndSummary(List<Order> orders) {
-        processedOrders.clear();
-        List<ProcessedOrder> processedList = new ArrayList<>();
+        List<ProcessedOrder> processedOrderList = new ArrayList<>();
 
         for (Order order : orders) {
             int itemCount = 0;
@@ -22,22 +20,20 @@ public class OrderService {
                 itemCount += item.getQuantity();
                 totalCost += item.getQuantity() * item.getPrice();
             }
-            processedList.add(new ProcessedOrder(order, itemCount, totalCost));
+            processedOrderList.add(new ProcessedOrder(order, itemCount, totalCost));
         }
-
-        processedOrders.addAll(processedList);
 
         long shippedCount = 0;
         double totalRevenue = 0.0;
 
-        for (ProcessedOrder order : processedList) {
-            if ("shipped".equalsIgnoreCase(order.getStatus())) {
+        for (ProcessedOrder order : processedOrderList) {
+            if (OrderConstants.SHIPPED.equalsIgnoreCase(order.getStatus())) {
                 shippedCount++;
                 totalRevenue += order.getTotalCost();
             }
         }
 
         OrderSummaryResponse summary = new OrderSummaryResponse(shippedCount, totalRevenue);
-        return new CombinedOrderResponse(processedList, summary);
+        return new CombinedOrderResponse(processedOrderList, summary);
     }
 } 

@@ -1,9 +1,13 @@
 package com.harneet.orderprocessor.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class ProcessedOrder extends Order {
     private int itemCount;
     private double totalCost;
-
 
     // Constructor to initialize ProcessedOrder using Order details
     public ProcessedOrder(Order order, int itemCount, double totalCost) {
@@ -12,8 +16,4 @@ public class ProcessedOrder extends Order {
         this.totalCost = totalCost;
     }
 
-    public int getItemCount() { return itemCount; }
-    public void setItemCount(int itemCount) { this.itemCount = itemCount; }
-    public double getTotalCost() { return totalCost; }
-    public void setTotalCost(double totalCost) { this.totalCost = totalCost; }
 }

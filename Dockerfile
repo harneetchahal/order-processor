@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy project jar file
 COPY target/orderprocessor-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose port (if needed)
+# Expose port
 EXPOSE 8080
 
 # Command to run the application
