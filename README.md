@@ -9,6 +9,7 @@ This is a Spring Boot project that processes order data provided in JSON format.
 - **Order Processing**: Calculate the total cost and item count for each order.
 - **Order Summary**: Display the total number of shipped orders and the total revenue from shipped orders.
 - **User Interface**: An easy-to-use HTML interface to input JSON data and display processed results.
+  ![Demo Video](demo/Order_Processor_Demo.mov)
 
 ## Technologies Used
 
